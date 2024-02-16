@@ -1,1 +1,4 @@
 /node_modules
+.env
+diagram.txt
+populatedb.js
