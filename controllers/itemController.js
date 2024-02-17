@@ -117,12 +117,24 @@ exports.item_create_post = [
 
 // Display item delete form on GET.
 exports.item_delete_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: item delete GET");
+	// Get details of book and all their books (in parallel)
+	const item = await Item.findById(req.params.id).exec();
+
+	if (item === null) {
+		// No results.
+		res.redirect("/catalog/items");
+	}
+
+	res.render("item_delate", {
+		title: "Delete Item",
+		item: item,
+	});
 });
 
 // Handle item delete on POST.
 exports.item_delete_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: item delete POST");
+	await Item.findByIdAndDelete(req.body.itemRid);
+	res.redirect("/catalog/items");
 });
 
 // Display item update form on GET.

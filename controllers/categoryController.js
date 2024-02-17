@@ -55,7 +55,7 @@ exports.category_create_post = [
 		// Extract the validation errors from a request.
 		const errors = validationResult(req);
 
-		// Create a genre object with escaped and trimmed data.
+		// Create a category object with escaped and trimmed data.
 		const category = new Category({ name: req.body.name });
 
 		if (!errors.isEmpty()) {
@@ -86,12 +86,45 @@ exports.category_create_post = [
 
 // Display category delete form on GET.
 exports.category_delete_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: category delete GET");
+	// Get details of book and all their books (in parallel)
+	const [category, allItems] = await Promise.all([
+		Category.findById(req.params.id).exec(),
+		Item.find({ category: req.params.id }, "name description").exec(),
+	]);
+
+	if (category === null) {
+		// No results.
+		res.redirect("/catalog/categories");
+	}
+
+	res.render("category_delate", {
+		title: "Delete Category",
+		category: category,
+		category_items: allItems,
+	});
 });
 
 // Handle category delete on POST.
 exports.category_delete_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: category delete POST");
+	// Get details of category and all their items (in parallel)
+	const [category, allItems] = await Promise.all([
+		Category.findById(req.params.id).exec(),
+		Item.find({ category: req.params.id }, "name description").exec(),
+	]);
+
+	if (allItems.length > 0) {
+		// Category has items. Render in same way as for GET route.
+		res.render("category_delete", {
+			title: "Delete Category",
+			category: category,
+			category_items: allItems,
+		});
+		return;
+	} else {
+		// Category has no items. Delete object and redirect to the list of categories.
+		await Category.findByIdAndDelete(req.body.categoryRid);
+		res.redirect("/catalog/categories");
+	}
 });
 
 // Display category update form on GET.

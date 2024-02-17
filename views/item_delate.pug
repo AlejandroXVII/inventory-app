@@ -1,0 +1,13 @@
+extends layout
+
+block content
+
+  h1 #{title}
+
+    p Do you really want to delete #{item.name}?
+
+    form(method='POST')
+        div.form-group
+            input#itemRid.form-control(type='hidden', name='itemRid', value=item._id )
+
+            button.btn.btn-primary(type='submit') Delete

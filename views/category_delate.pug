@@ -1,0 +1,24 @@
+extends layout
+
+block content
+
+  h1 Category: #{category.name}
+  p #{category.description}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    if category_items.length
+      p Before delate this category you need to delate these items
+      dl
+        each item in category_items
+          dt
+            a(href=item.url) #{item.name}
+          dd #{item.description}
+    else
+      p Do you really want to delete this Category?
+
+      form(method='POST')
+        div.form-group
+            input#categoryRid.form-control(type='hidden', name='categoryRid', value=category._id )
+
+            button.btn.btn-primary(type='submit') Delete
