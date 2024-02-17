@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to #[em Inventory APP], a very basic Express website developed as a part of the Odin Project curriculum
+
+  h1 Dynamic content
+
+  p The Inventory has the following record counts:
+
+  ul
+    li #[strong Items:] !{item_count}
+    li #[strong Categories:] !{category_count}
