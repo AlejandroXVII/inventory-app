@@ -17,8 +17,8 @@ block content
       select#category.form-control(name='category' required)
         option(value='') --Please select a category--
         for category in categories
-          if book
-            if category._id.toString()===book.category._id.toString()
+          if item
+            if category._id.toString()===item.category._id.toString()
               option(value=category._id selected) #{category.name}
             else
               option(value=category._id) #{category.name}
