@@ -88,16 +88,21 @@ async function createCategories() {
 async function createItems() {
 	console.log("Adding Items");
 	await Promise.all([
-		itemCreate(0, "Max Fort model 3", "PC gamer 64 ram, 1T ROM", 900, 5, [
-			categories[0],
-		]),
+		itemCreate(
+			0,
+			"Max Fort model 3",
+			"PC gamer 64 ram, 1T ROM",
+			900,
+			5,
+			categories[0]
+		),
 		itemCreate(
 			1,
 			"IPhone X",
 			"The new generation of one in the palm of your hands",
 			1500,
 			2,
-			[categories[1]]
+			categories[1]
 		),
 		itemCreate(
 			2,
@@ -105,17 +110,17 @@ async function createItems() {
 			"4gm ram 64gb rom 54mp, 8mp frontal camera",
 			100,
 			16,
-			[categories[1]]
+			categories[1]
 		),
-		itemCreate(3, "Optiplex 980", "10ram 300rom", 200, 10, [categories[0]]),
-		itemCreate(4, "PC table", "White color", 50, 7, [categories[2]]),
+		itemCreate(3, "Optiplex 980", "10ram 300rom", 200, 10, categories[0]),
+		itemCreate(4, "PC table", "White color", 50, 7, categories[2]),
 		itemCreate(
 			5,
 			"Apple watch Series 9",
 			"Powerful sensors, advanced health features.",
 			500,
 			3,
-			[categories[3]]
+			categories[3]
 		),
 		itemCreate(
 			6,
@@ -123,7 +128,7 @@ async function createItems() {
 			"The most rugged, and capable.",
 			800,
 			2,
-			[categories[3]]
+			categories[3]
 		),
 		itemCreate(
 			7,
@@ -131,7 +136,7 @@ async function createItems() {
 			"All the essentials. Light on price.",
 			300,
 			8,
-			[categories[3]]
+			categories[3]
 		),
 	]);
 }

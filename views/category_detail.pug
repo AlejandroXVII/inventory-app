@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+  h1 Item: #{category.name}
+  p #{category.description}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    p #[strong Items in this Category: ] 
+    if item_list.length
+    ul
+      each item in item_list
+        li
+          a(href=item.url) #{item.name}
+
+  hr
+  p
+    a(href=category.url+'/update') Update category
+  p
+    a(href=category.url+'/delete') Delete category

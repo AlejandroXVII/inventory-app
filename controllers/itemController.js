@@ -4,7 +4,6 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 exports.index = asyncHandler(async (req, res, next) => {
-	// Get details of books, book instances, authors and genre counts (in parallel)
 	const [numItems, numCategories] = await Promise.all([
 		Item.countDocuments({}).exec(),
 		Category.countDocuments({}).exec(),
@@ -19,12 +18,30 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of all items.
 exports.item_list = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: item list");
+	const allItems = await Item.find({}, "name category")
+		.sort({ name: 1 })
+		.populate("category")
+		.exec();
+
+	res.render("item_list", { title: "Item List", item_list: allItems });
 });
 
 // Display detail page for a specific item.
 exports.item_detail = asyncHandler(async (req, res, next) => {
-	res.send(`NOT IMPLEMENTED: item detail: ${req.params.id}`);
+	// Get details of items
+	const item = await Item.findById(req.params.id).populate("category").exec();
+
+	if (item === null) {
+		// No results.
+		const err = new Error("Item not found");
+		err.status = 404;
+		return next(err);
+	}
+
+	res.render("item_detail", {
+		title: item.title,
+		item: item,
+	});
 });
 
 // Display item create form on GET.
