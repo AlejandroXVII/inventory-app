@@ -36,9 +36,6 @@ router.get("/items", item_controller.item_list);
 
 /// CATEGORIES ROUTES ///
 
-// GET catalog home page.
-router.get("/", category_controller.index);
-
 // GET request for creating a category. NOTE This must come before routes that display category (uses id).
 router.get("/category/create", category_controller.category_create_get);
 
@@ -62,3 +59,5 @@ router.get("/category/:id", category_controller.category_detail);
 
 // GET request for list of all category categories.
 router.get("/categories", category_controller.category_list);
+
+module.exports = router;
